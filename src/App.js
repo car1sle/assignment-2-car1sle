@@ -9,7 +9,11 @@ const Container = styled.div`
 `;
 
 const App = () => {
-  return <TimersView />;
+  return (
+    <Container>
+      <TimersView />
+    </Container>
+  );
 };
 
 export default App;
