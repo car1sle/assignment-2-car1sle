@@ -26,6 +26,7 @@ const theme = {
 };
 
 const StyledButton = styled.button`
+  font-family: 'Roboto', sans-serif;
   font-size: 17px;
   text-transform: uppercase;
   margin: 5px;

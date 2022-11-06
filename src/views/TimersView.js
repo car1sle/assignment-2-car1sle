@@ -20,9 +20,9 @@ const Timer = styled.div`
 const TimerTitle = styled.div`
   font-size: 15px;
   font-style: italic;
-  text-align: center;
+  text-align: left;
   background-color: #2e2e2e;
-  padding: 5px 0;
+  padding: 7px;
   color: #ffffff;
 `;
 
@@ -39,7 +39,7 @@ const TimersView = () => {
       {timers.map((timer) => (
         <Timer key={`timer-${timer.title}`}>
           <TimerTitle>{timer.title}</TimerTitle>
-          <div style={{ padding: "20px",}}>{timer.C}</div>
+          <div style={{ padding: "5px 15px",}}>{timer.C}</div>
         </Timer>
       ))}
     </Timers>
