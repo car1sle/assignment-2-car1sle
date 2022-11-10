@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { AppContext } from "../AppProvider";
 
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
@@ -10,11 +11,13 @@ const Timers = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 20px 0;
 `;
 
 const Timer = styled.div`
   border: 2px solid #2e2e2e;
-  margin: 10px;
+  margin: 8px;
+  background: #ffffff;
 `;
 
 const TimerTitle = styled.div`
@@ -27,19 +30,28 @@ const TimerTitle = styled.div`
 `;
 
 const TimersView = () => {
-  const timers = [
-    { title: "Stopwatch", C: <Stopwatch /> },
-    { title: "Countdown", C: <Countdown /> },
-    { title: "XY", C: <XY /> },
-    { title: "Tabata", C: <Tabata /> },
-  ];
+  const { currentTimerId, setcurrentTimerId, timers } = useContext(AppContext);
+
+  const InnerTimer = timerType => {
+    if (timerType == 'Stopwatch') {
+      return <Stopwatch />
+    } else if (timerType == 'Countdown') {
+      return <Countdown />
+    } else if (timerType == 'XY') {
+      return <Tabata />
+    } else if (timerType == 'Tabata') {
+      return <XY />
+    };
+  };
 
   return (
     <Timers>
-      {timers.map((timer) => (
-        <Timer key={`timer-${timer.title}`}>
-          <TimerTitle>{timer.title}</TimerTitle>
-          <div style={{ padding: "5px 15px",}}>{timer.C}</div>
+      {timers && timers.map(timer => (
+        <Timer key={timer.id}>
+          <TimerTitle>{timer.timerType}</TimerTitle>
+          <div style={{ padding: "5px 15px",}}>
+            <InnerTimer />
+          </div>
         </Timer>
       ))}
     </Timers>
