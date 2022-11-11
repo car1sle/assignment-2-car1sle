@@ -1,50 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+// import { AppContext } from '../../AppProvider';
 import Counter from '../generic/Counter';
 import { translateFromSeconds } from '../../utils/helpers';
 import { useTimeSetter } from '../../utils/hooks';
 
-const Countdown = props => {
+const Countdown = ({props}) => {
+
+    // const { setcurrentTimerId, isRunningMain } = useContext(AppContext);
+    const { inputHours, inputMinutes, inputSeconds } = props;
 
     const [isRunning, setIsRunning] = useState(false);
     const [isComplete, setIsComplete] = useState(true);
     const [time, setTime] = useState(0);
-    const [inputHours, setInputHours] = useState(0);
-    const [inputMinutes, setInputMinutes] = useState(0);
-    const [inputSeconds, setInputSeconds] = useState(0);
     const [inputTime, setInputTime] = useState(0);
 
-    const handleClick = value => {
-        switch(value) {
-            case 'Start':
-                setIsRunning(true);
-                setIsComplete(false);
-                break;
-            case 'Pause':
-                setIsRunning(false);
-                break;
-            case 'Resume':
-                setIsRunning(true);
-                break;
-            case 'Fast Forward':
-                setTime(0);
-                setIsComplete(true);
-                break;
-            case 'Reset':
-                setTime(inputTime);
-                setIsComplete(true);
-                setIsRunning(false);
-                break;
-            default:
-                break;
-        }
-    }
+    useTimeSetter(setInputTime, inputHours, inputMinutes, inputSeconds);
+    useTimeSetter(setTime, inputHours, inputMinutes, inputSeconds);
+
+    // const handleClick = value => {
+    //     switch(value) {
+    //         case 'Start':
+    //             setIsRunning(true);
+    //             setIsComplete(false);
+    //             break;
+    //         case 'Pause':
+    //             setIsRunning(false);
+    //             break;
+    //         case 'Resume':
+    //             setIsRunning(true);
+    //             break;
+    //         case 'Fast Forward':
+    //             setTime(0);
+    //             setIsComplete(true);
+    //             break;
+    //         case 'Reset':
+    //             setTime(inputTime);
+    //             setIsComplete(true);
+    //             setIsRunning(false);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
 
     // const makeButton = ({value, disabledValue}) => {
     //     return <Button value={value} disabledValue={inputTime ? disabledValue : true} onClick={handleClick} />
     // };
-
-    useTimeSetter(setInputTime, inputHours, inputMinutes, inputSeconds);
-    useTimeSetter(setTime, inputHours, inputMinutes, inputSeconds);
 
     useEffect(() => {
 

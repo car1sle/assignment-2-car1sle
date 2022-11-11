@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, createContext } from 'react';
+import React,  { useState } from "react";
 
 export const AppContext = React.createContext({});
 
@@ -15,6 +14,10 @@ export const AppProvider = ({ children }) => {
         value={{
           currentTimerId,
           setcurrentTimerId,
+          isRunningMain,
+          setIsRunningMain,
+          isCompleteMain,
+          setIsCompleteMain,
           timers,
           createTimer: ({ timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds }) => {
             const id = timers.length + 1;

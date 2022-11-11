@@ -1,67 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+// import { AppContext } from '../../AppProvider';
 import Counter from '../generic/Counter';
 import { translateFromSeconds } from '../../utils/helpers';
 import { useTimeSetter } from '../../utils/hooks';
 
-const Tabata = props => {
+const Tabata = ({props}) => {
+
+    // const { setcurrentTimerId, isRunningMain } = useContext(AppContext);
+    const { inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds } = props;
 
     const [isRunning, setIsRunning] = useState(false);
     const [isComplete, setIsComplete] = useState(true);
     const [time, setTime] = useState(0);
-    const [inputHours, setInputHours] = useState(0);
-    const [inputMinutes, setInputMinutes] = useState(0);
-    const [inputSeconds, setInputSeconds] = useState(0);
     const [inputTime, setInputTime] = useState(0);
     const [round, setRound] = useState(1);
     const [counterRound, setCounterRound] = useState(1);
-    const [inputRounds, setInputRounds] = useState(1);
     const [time2, setTime2] = useState(0);
-    const [input2Hours, setInput2Hours] = useState(0);
-    const [input2Minutes, setInput2Minutes] = useState(0);
-    const [input2Seconds, setInput2Seconds] = useState(0);
     const [input2Time, setInput2Time] = useState(0);
-
-    const handleClick = value => {
-        switch(value) {
-            case 'Start':
-                setIsRunning(true);
-                setIsComplete(false);
-                break;
-            case 'Pause':
-                setIsRunning(false);
-                break;
-            case 'Resume':
-                setIsRunning(true);
-                break;
-            case 'Fast Forward':
-                setTime(0);
-                setTime2(0);
-                setIsRunning(false);
-                setIsComplete(true);
-                setRound(inputRounds);
-                setCounterRound(inputRounds);
-                break;
-            case 'Reset':
-                setTime(inputTime);
-                setTime2(input2Time);
-                setIsComplete(true);
-                setIsRunning(false);
-                setRound(inputRounds);
-                setCounterRound(1);
-                break;
-            default:
-                break;
-        }
-    }
-
-    // const makeButton = ({value, disabledValue}) => {
-    //     return <Button value={value} disabledValue={inputTime ? disabledValue : true} onClick={handleClick} />
-    // };
 
     useTimeSetter(setInputTime, inputHours, inputMinutes, inputSeconds);
     useTimeSetter(setTime, inputHours, inputMinutes, inputSeconds);
     useTimeSetter(setInput2Time, input2Hours, input2Minutes, input2Seconds);
     useTimeSetter(setTime2, input2Hours, input2Minutes, input2Seconds);
+
+    // const handleClick = value => {
+    //     switch(value) {
+    //         case 'Start':
+    //             setIsRunning(true);
+    //             setIsComplete(false);
+    //             break;
+    //         case 'Pause':
+    //             setIsRunning(false);
+    //             break;
+    //         case 'Resume':
+    //             setIsRunning(true);
+    //             break;
+    //         case 'Fast Forward':
+    //             setTime(0);
+    //             setTime2(0);
+    //             setIsRunning(false);
+    //             setIsComplete(true);
+    //             setRound(inputRounds);
+    //             setCounterRound(inputRounds);
+    //             break;
+    //         case 'Reset':
+    //             setTime(inputTime);
+    //             setTime2(input2Time);
+    //             setIsComplete(true);
+    //             setIsRunning(false);
+    //             setRound(inputRounds);
+    //             setCounterRound(1);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
+
+    // const makeButton = ({value, disabledValue}) => {
+    //     return <Button value={value} disabledValue={inputTime ? disabledValue : true} onClick={handleClick} />
+    // };
 
     useEffect(() => {
 
@@ -108,35 +105,33 @@ const Tabata = props => {
                 <div style={{ width: "75px", textAlign: "right"}}>Rest:</div>
                 <Counter>{translateFromSeconds(time2)}</Counter>
             </div>
+            <div style={{ margin: "15px 0 20px", fontStyle: "italic",}}>Round {counterRound} of {inputRounds}</div>
         </div>
     );
 
     // return (
-    //     <>
-    //         <div style={{ margin: "15px 0 20px", fontStyle: "italic",}}>Round {counterRound} of {inputRounds}</div>
-    //         <div style={{ margin: "10px 0 20px", display: "flex",}}>
-    //             {makeButton({
-    //                 value: "Start",
-    //                 disabledValue: !isComplete || (time === 0)
-    //             })}
-    //             {makeButton({
-    //                 value: "Pause",
-    //                 disabledValue: !isRunning
-    //             })}
-    //             {makeButton({
-    //                 value: "Resume",
-    //                 disabledValue: isRunning || isComplete || (time === 0 && time2 === 0)
-    //             })}
-    //             {makeButton({
-    //                 value: "Fast Forward",
-    //                 disabledValue: isComplete || (time === 0 && time2 === 0)
-    //             })}
-    //             {makeButton({
-    //                 value: "Reset",
-    //                 disabledValue: isComplete && (time === inputTime)
-    //             })}
-    //         </div>
-    //     </>
+//         <div style={{ margin: "10px 0 20px", display: "flex",}}>
+//             {makeButton({
+//                 value: "Start",
+//                 disabledValue: !isComplete || (time === 0)
+//             })}
+//             {makeButton({
+//                 value: "Pause",
+//                 disabledValue: !isRunning
+//             })}
+//             {makeButton({
+//                 value: "Resume",
+//                 disabledValue: isRunning || isComplete || (time === 0 && time2 === 0)
+//             })}
+//             {makeButton({
+//                 value: "Fast Forward",
+//                 disabledValue: isComplete || (time === 0 && time2 === 0)
+//             })}
+//             {makeButton({
+//                 value: "Reset",
+//                 disabledValue: isComplete && (time === inputTime)
+//             })}
+//         </div>
     // );
 };
 

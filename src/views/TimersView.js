@@ -32,15 +32,15 @@ const TimerTitle = styled.div`
 const TimersView = () => {
   const { currentTimerId, setcurrentTimerId, timers } = useContext(AppContext);
 
-  const InnerTimer = timerType => {
-    if (timerType == 'Stopwatch') {
-      return <Stopwatch />
-    } else if (timerType == 'Countdown') {
-      return <Countdown />
-    } else if (timerType == 'XY') {
-      return <Tabata />
-    } else if (timerType == 'Tabata') {
-      return <XY />
+  const InnerTimer = ({type, props}) => {
+    if (type === 'Stopwatch') {
+      return <Stopwatch props={props} />
+    } else if (type === 'Countdown') {
+      return <Countdown props={props} />
+    } else if (type === 'XY') {
+      return <XY props={props} />
+    } else if (type === 'Tabata') {
+      return <Tabata props={props} />
     };
   };
 
@@ -50,7 +50,16 @@ const TimersView = () => {
         <Timer key={timer.id}>
           <TimerTitle>{timer.timerType}</TimerTitle>
           <div style={{ padding: "5px 15px",}}>
-            <InnerTimer />
+            <InnerTimer type={timer.timerType} props={{
+              id: timer.id,
+              inputHours: timer.inputHours, 
+              inputMinutes: timer.inputMinutes, 
+              inputSeconds: timer.inputSeconds, 
+              input2Hours: timer.input2Hours, 
+              input2Minutes: timer.input2Minutes, 
+              input2Seconds: timer.input2Seconds, 
+              inputRounds: timer.inputRounds,
+            }} />
           </div>
         </Timer>
       ))}
