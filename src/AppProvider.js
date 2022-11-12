@@ -5,20 +5,21 @@ export const AppContext = React.createContext({});
 export const AppProvider = ({ children }) => {
 
     const [timers, setTimers] = useState([]);
-    const [currentTimerId, setcurrentTimerId] = useState(null);
-    const [isRunningMain, setIsRunningMain] = useState(false);
-    const [isCompleteMain, setIsCompleteMain] = useState(true);
+    const [currentTimerId, setCurrentTimerId] = useState(null);
+    const [workoutIsRunning, setWorkoutIsRunning] = useState(false);
+    const [workoutIsComplete, setWorkoutIsComplete] = useState(true);
 
     return (
       <AppContext.Provider
         value={{
-          currentTimerId,
-          setcurrentTimerId,
-          isRunningMain,
-          setIsRunningMain,
-          isCompleteMain,
-          setIsCompleteMain,
           timers,
+          setTimers,
+          currentTimerId,
+          setCurrentTimerId,
+          workoutIsRunning,
+          setWorkoutIsRunning,
+          workoutIsComplete,
+          setWorkoutIsComplete,
           createTimer: ({ timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds }) => {
             const id = timers.length + 1;
             setTimers([...timers, { id, timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds }]);

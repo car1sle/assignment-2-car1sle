@@ -30,7 +30,7 @@ const TimerTitle = styled.div`
 `;
 
 const TimersView = () => {
-  const { currentTimerId, setcurrentTimerId, timers } = useContext(AppContext);
+  const { timers } = useContext(AppContext);
 
   const InnerTimer = ({type, props}) => {
     if (type === 'Stopwatch') {
