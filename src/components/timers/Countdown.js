@@ -1,40 +1,39 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '../../AppProvider';
-import Counter from '../generic/Counter';
 import { translateFromSeconds, translateToSeconds } from '../../utils/helpers';
+import Counter from '../generic/Counter';
 
-const Countdown = ({props}) => {
+const Countdown = ({ props }) => {
 
-    const { timers, workoutIsRunning, setWorkoutIsRunning, currentTimerId, setCurrentTimerId, setWorkoutIsComplete } = useContext(AppContext);
-    const { id, inputHours, inputMinutes, inputSeconds } = props;
+    const { time, timers, removeTimer } = useContext(AppContext);
+    const { index, workoutDuration } = props;
 
-    const [time, setTime] = useState(translateToSeconds(inputHours, inputMinutes, inputSeconds));
-
-    useEffect(() => {
-
-        let i;
-
-        if (workoutIsRunning && currentTimerId === id) {
-            i = setInterval(() => {
-                setTime(time - 1);
-            }, 1000);
-            if (time === 0) {
-                clearInterval(i);
-                if (id === timers.length) {
-                    setWorkoutIsRunning(false);
-                    setWorkoutIsComplete(true);
-                } else {
-                    setCurrentTimerId(currentTimerId + 1);
-                }
-            }
+    // Calculate total time of all timers before this one
+    const timeBeforeMe = timers.reduce((acc, curr, i) => {
+        const workoutDuration = translateToSeconds(curr.inputHours, curr.inputMinutes, curr.inputSeconds);
+        if (i < index) {
+            return workoutDuration + acc;
+        } else {
+            return acc;
         }
+    }, 0);
 
-        return () => clearInterval(i);
-
-    }, [time, workoutIsRunning, currentTimerId, id, setCurrentTimerId, setWorkoutIsComplete, setWorkoutIsRunning, timers]);
+    // This timer is active if the current time is between 
+    // the sum of all previous and the duration of this one
+    const active = time >= timeBeforeMe && time < timeBeforeMe + workoutDuration;
 
     return (
-        <Counter>{translateFromSeconds(time)}</Counter>
+        <>
+        <div>Duration</div>
+        <div><Counter>{translateFromSeconds(workoutDuration)}</Counter></div>
+        {(active) && 
+            <div>
+                <div>Progress</div>
+                <div><Counter>{translateFromSeconds(workoutDuration - timeBeforeMe)}</Counter></div>
+            </div>
+        }
+        <button onClick={() => removeTimer(index)}>Remove</button>
+        </>
     );
 
 };

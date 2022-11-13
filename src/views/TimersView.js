@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { AppContext } from "../AppProvider";
+import { translateToSeconds } from '../utils/helpers';
 
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
@@ -51,14 +52,10 @@ const TimersView = () => {
           <TimerTitle>{timer.timerType}</TimerTitle>
           <div style={{ padding: "5px 15px",}}>
             <InnerTimer type={timer.timerType} props={{
-              id: timer.id,
-              inputHours: timer.inputHours, 
-              inputMinutes: timer.inputMinutes, 
-              inputSeconds: timer.inputSeconds, 
-              input2Hours: timer.input2Hours, 
-              input2Minutes: timer.input2Minutes, 
-              input2Seconds: timer.input2Seconds, 
-              inputRounds: timer.inputRounds,
+              index: timer.id,
+              workoutDuration: translateToSeconds(timer.inputHours, timer.inputMinutes, timer.inputSeconds),
+              restDuration: translateToSeconds(timer.input2Hours, timer.input2Minutes, timer.input2Seconds),
+              rounds: timer.inputRounds,
             }} />
           </div>
         </Timer>

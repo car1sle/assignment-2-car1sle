@@ -4,24 +4,16 @@ import Button from '../components/generic/Button';
 
 const ButtonsView = () => {
 
-    const { timers, setWorkoutIsRunning, setWorkoutIsComplete, setCurrentTimerId } = useContext(AppContext);
+    const { timers, paused, setPaused, reset } = useContext(AppContext);
 
     const handleClick = value => {
-        switch(value) {
-            case 'Start':
-                setWorkoutIsRunning(true);
-                setWorkoutIsComplete(false);
-                setCurrentTimerId(1);
-                break;
-            case 'Pause':
-                setWorkoutIsRunning(false);
-                break;
-            case 'Resume':
-                setWorkoutIsRunning(true);
-                break;
-            default:
-                break;
+
+        if (value === 'Start' || value === 'Pause') {
+            setPaused(!paused);
+        } else if (value === 'Reset') {
+            reset();
         }
+        
     };
 
     const makeButton = ({value}) => {
@@ -31,20 +23,11 @@ const ButtonsView = () => {
     return (
         <div style={{ margin: "20px 0", display: "flex", justifyContent: "center",}}>
             {makeButton({
-                value: "Start"
-            })}
-            {makeButton({
-                value: "Pause"
-            })}
-            {makeButton({
-                value: "Resume"
-            })}
-            {/* {makeButton({
-                value: "Fast Forward"
+                value: paused ? 'Start' : 'Pause'
             })}
             {makeButton({
                 value: "Reset"
-            })} */}
+            })}
         </div>
     );
 
