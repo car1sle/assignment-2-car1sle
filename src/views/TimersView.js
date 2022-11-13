@@ -50,7 +50,7 @@ const TimersView = () => {
       {timers && timers.map(timer => (
         <Timer key={timer.id}>
           <TimerTitle>{timer.timerType}</TimerTitle>
-          <div style={{ padding: "5px 15px",}}>
+          <div style={{ width: "430px", padding: "15px 0 15px 25px",}}>
             <InnerTimer type={timer.timerType} props={{
               index: timer.id,
               workoutDuration: translateToSeconds(timer.inputHours, timer.inputMinutes, timer.inputSeconds),

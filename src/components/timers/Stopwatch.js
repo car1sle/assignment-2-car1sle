@@ -1,39 +1,28 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../AppProvider';
-import { translateFromSeconds, translateToSeconds } from '../../utils/helpers';
+import { useInterval } from '../../utils/hooks';
+import { translateFromSeconds } from '../../utils/helpers';
 import Counter from '../generic/Counter';
 
 const Stopwatch = ({ props }) => {
 
-    const { time, timers, removeTimer } = useContext(AppContext);
     const { index, workoutDuration } = props;
+    const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
+    const [time, setTime] = useState(0);
+    const active = activeIndex === index;
 
-    // Calculate total time of all timers before this one
-    const timeBeforeMe = timers.reduce((acc, curr, i) => {
-        const workoutDuration = translateToSeconds(curr.inputHours, curr.inputMinutes, curr.inputSeconds);
-        if (i < index) {
-            return workoutDuration + acc;
+    useInterval(() => {
+        if (paused || !active) return;
+
+        if (time === workoutDuration) {
+            setActiveIndex(index + 1);
         } else {
-            return acc;
+            setTime(c => c + 1);
         }
-    }, 0);
-
-    // This timer is active if the current time is between 
-    // the sum of all previous and the duration of this one
-    const active = time >= timeBeforeMe && time < timeBeforeMe + workoutDuration;
+    }, 1000);
 
     return (
-        <>
-        <div>Duration</div>
-        <div><Counter>{translateFromSeconds(workoutDuration)}</Counter></div>
-        {(active) && 
-            <div>
-                <div>Progress</div>
-                <div><Counter>{translateFromSeconds(time - timeBeforeMe)}</Counter></div>
-            </div>
-        }
-        <button onClick={() => removeTimer(index)}>Remove</button>
-        </>
+        <Counter duration={translateFromSeconds(workoutDuration)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
     );
 
 };

@@ -13,7 +13,6 @@ const ButtonsView = () => {
         } else if (value === 'Reset') {
             reset();
         }
-        
     };
 
     const makeButton = ({value}) => {
