@@ -48,7 +48,7 @@ const TimersView = () => {
   return (
     <Timers>
       {timers && timers.map(timer => (
-        <Timer key={timer.id}>
+        <Timer key={'' + timer.id + translateToSeconds(timer.inputHours, timer.inputMinutes, timer.inputSeconds)}>
           <TimerTitle>{timer.timerType}</TimerTitle>
           <div style={{ width: "430px", padding: "15px 0 15px 25px",}}>
             <InnerTimer type={timer.timerType} props={{

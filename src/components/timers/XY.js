@@ -1,50 +1,36 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../AppProvider';
+import { useInterval } from '../../utils/hooks';
+import { translateFromSeconds } from '../../utils/helpers';
 import Counter from '../generic/Counter';
-import { translateFromSeconds, translateToSeconds } from '../../utils/helpers';
 
-const XY = ({props}) => {
+const XY = ({ props }) => {
 
-    const { timers, workoutIsRunning, setWorkoutIsRunning, currentTimerId, setCurrentTimerId, setWorkoutIsComplete } = useContext(AppContext);
-    const { id, inputHours, inputMinutes, inputSeconds, inputRounds } = props;
-
-    const inputTime = translateToSeconds(inputHours, inputMinutes, inputSeconds);
-
-    const [time, setTime] = useState(inputTime);
+    const { index, workoutDuration, rounds } = props;
+    const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
+    const [time, setTime] = useState(workoutDuration);
     const [currentRound, setCurrentRound] = useState(1);
+    const active = activeIndex === index;
 
-    useEffect(() => {
+    useInterval(() => {
+        if (paused || !active) return;
 
-        let i;
-
-        if (workoutIsRunning && currentTimerId === id) {
-            i = setInterval(() => {
-                setTime(time - 1);
-            }, 1000);
-            if (time === 0) {
-                if (currentRound === inputRounds) {
-                    clearInterval(i);
-                    if (id === timers.length) {
-                        setWorkoutIsRunning(false);
-                        setWorkoutIsComplete(true);
-                    } else {
-                        setCurrentTimerId(currentTimerId + 1);
-                    }
-                } else {
-                    setTime(inputTime);
-                    setCurrentRound(currentRound + 1);
-                }
+        if (time === 0) {
+            if (currentRound === rounds) {
+                setActiveIndex(index + 1);
+            } else {
+                setCurrentRound(currentRound + 1);
+                setTime(workoutDuration);
             }
+        } else {
+            setTime(c => c - 1);
         }
-
-        return () => clearInterval(i);
-
-    }, [time, inputTime, workoutIsRunning, currentRound, currentTimerId, id, setCurrentTimerId, setWorkoutIsComplete, setWorkoutIsRunning, timers, inputRounds]);
+    }, 1000);
 
     return (
         <>
-            <Counter>{translateFromSeconds(time)}</Counter>
-            <div style={{ margin: "15px 0 20px", fontStyle: "italic",}}>Round {currentRound} of {inputRounds}</div>
+            <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration * rounds)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
+            {active && <div style={{ fontStyle: "italic",}}>Round {currentRound} of {rounds}</div>}
         </>
     );
 

@@ -22,7 +22,7 @@ const Stopwatch = ({ props }) => {
     }, 1000);
 
     return (
-        <Counter duration={translateFromSeconds(workoutDuration)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
+        <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
     );
 
 };

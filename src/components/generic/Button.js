@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 
 // Palette generated @ https://coolors.co/
-const theme = {
+export const theme = {
   start: {
     bgColor: "#44AF69",
     color: "#ffffff"
@@ -57,7 +57,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ value, disabledValue, onClick }) => {
+export const Button = ({ value, disabledValue, onClick }) => {
 
     return (
       <ThemeProvider theme={theme}>
@@ -67,5 +67,3 @@ const Button = ({ value, disabledValue, onClick }) => {
       </ThemeProvider>
     );
   };
-  
-  export default Button;

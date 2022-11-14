@@ -1,71 +1,53 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../AppProvider';
+import { useInterval } from '../../utils/hooks';
+import { translateFromSeconds } from '../../utils/helpers';
 import Counter from '../generic/Counter';
-import { translateFromSeconds, translateToSeconds } from '../../utils/helpers';
 
-const Tabata = ({props}) => {
+const Tabata = ({ props }) => {
 
-    const { timers, workoutIsRunning, setWorkoutIsRunning, currentTimerId, setCurrentTimerId, setWorkoutIsComplete } = useContext(AppContext);
-    const { id, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds } = props;
-
-    const inputTime = translateToSeconds(inputHours, inputMinutes, inputSeconds);
-    const input2Time = translateToSeconds(input2Hours, input2Minutes, input2Seconds);
-
-    const [time, setTime] = useState(inputTime);
-    const [time2, setTime2] = useState(input2Time);
+    const { index, workoutDuration, restDuration, rounds } = props;
+    const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
+    const [time, setTime] = useState(workoutDuration);
+    const [time2, setTime2] = useState(restDuration);
     const [currentRound, setCurrentRound] = useState(1);
+    const active = activeIndex === index;
 
-    useEffect(() => {
+    useInterval(() => {
+        if (paused || !active) return;
 
-        let i;
         let i2;
 
-        if (workoutIsRunning && currentTimerId === id) {
-            i = setInterval(() => {
-                setTime(time - 1);
-            }, 1000);
-            if (time === 0) {
-                if (time2 !== 0) {
-                    i2 = setInterval(() => {
-                        setTime2(time2 - 1);
-                    }, 1000);
-                    clearInterval(i);
-                } else if (currentRound === inputRounds) {
-                    clearInterval(i);
-                    clearInterval(i2);
-                    if (id === timers.length) {
-                        setWorkoutIsRunning(false);
-                        setWorkoutIsComplete(true);
-                    } else {
-                        setCurrentTimerId(currentTimerId + 1);
-                    }
+        if (time === 0) {
+            if (time2 === 0) {
+                if (currentRound === rounds) {
+                    setActiveIndex(index + 1);
                 } else {
-                    setTime(inputTime);
-                    setTime2(input2Time);
                     setCurrentRound(currentRound + 1);
+                    setTime(workoutDuration);
+                    setTime2(restDuration);
                 }
+            } else {
+                i2 = setInterval(() => {
+                    setTime2(time2 - 1);
+                }, 1000);
             }
+        } else {
+            setTime(c => c - 1);
         }
 
         return () => {
-            clearInterval(i);
             clearInterval(i2);
         };
-
-    }, [time, time2, inputTime, input2Time, workoutIsRunning, currentRound, currentTimerId, id, setCurrentTimerId, setWorkoutIsComplete, setWorkoutIsRunning, timers, inputRounds ]);
+        
+    }, 1000);
 
     return (
-        <div style={{ textAlign: "center",}}>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center",}}>
-                <div style={{ width: "75px", textAlign: "right"}}>Workout:</div>
-                <Counter>{translateFromSeconds(time)}</Counter>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center",}}>
-                <div style={{ width: "75px", textAlign: "right"}}>Rest:</div>
-                <Counter>{translateFromSeconds(time2)}</Counter>
-            </div>
-            <div style={{ margin: "15px 0 20px", fontStyle: "italic",}}>Round {currentRound} of {inputRounds}</div>
-        </div>
+        <>
+            <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration * rounds)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
+            <Counter label="Rest duration" duration={translateFromSeconds(restDuration * rounds)} progress={active && translateFromSeconds(time2)} removeClick={() => removeTimer(index)} />
+            {active && <div>Round {currentRound} of {rounds}</div>}
+        </>
     );
 
 };

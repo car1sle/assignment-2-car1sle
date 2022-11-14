@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppProvider';
-import Button from '../components/generic/Button';
+import { Button } from '../components/generic/Button';
 
 const ButtonsView = () => {
 
