@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 export const AppContext = React.createContext({});
 
@@ -17,7 +18,7 @@ export const AppProvider = ({ children }) => {
           setPaused,
           reset: () => setActiveIndex(0),
           createTimer: ({ timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds }) => {
-            const id = timers.length;
+            const id = uuid();
             setTimers([...timers, { id, timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds }]);
           },
           removeTimer: index => setTimers(timers.filter((t, i) => i !== index)),

@@ -21,8 +21,18 @@ const Stopwatch = ({ props }) => {
         }
     }, 1000);
 
+    let progressVal;
+
+    if (active) {
+        progressVal = translateFromSeconds(time);
+    } else if (activeIndex > index) {
+        progressVal = 'Complete';
+    } else {
+        progressVal = 'Coming Up';
+    }
+
     return (
-        <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
+        <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
     );
 
 };

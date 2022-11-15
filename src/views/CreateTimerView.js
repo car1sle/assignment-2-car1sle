@@ -34,7 +34,7 @@ const CreateTimerView = () => {
             <div style={{ textAlign: "center",}}>
                 <select id="timers" onChange={e => {setTimerType(e.target.value);}}>
                     <option value={timerType}>{timerType}</option>
-                    {timers.map(timer => <option key={timer.timerType} value={timer.timerType}>{timer.timerType}</option>)}
+                    {timers.map(timer => timerType !== timer.timerType && <option key={timer.timerType} value={timer.timerType}>{timer.timerType}</option>)}
                 </select>
             </div>
         )

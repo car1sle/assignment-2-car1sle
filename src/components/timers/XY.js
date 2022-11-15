@@ -27,9 +27,19 @@ const XY = ({ props }) => {
         }
     }, 1000);
 
+    let progressVal;
+
+    if (active) {
+        progressVal = translateFromSeconds(time);
+    } else if (activeIndex > index) {
+        progressVal = 'Complete';
+    } else {
+        progressVal = 'Coming Up';
+    }
+
     return (
         <>
-            <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration * rounds)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
+            <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration * rounds)} progress={progressVal} removeClick={() => removeTimer(index)} />
             {active && <div style={{ fontStyle: "italic",}}>Round {currentRound} of {rounds}</div>}
         </>
     );
