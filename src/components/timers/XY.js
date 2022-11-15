@@ -1,46 +1,29 @@
 import { useContext, useState } from 'react';
 import { AppContext } from '../../AppProvider';
-import { useInterval } from '../../utils/hooks';
 import { translateFromSeconds } from '../../utils/helpers';
 import Counter from '../generic/Counter';
 
 const XY = ({ props }) => {
 
-    const { index, workoutDuration, rounds } = props;
-    const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
-    const [time, setTime] = useState(workoutDuration);
+    const { index, workoutDuration, currentDuration, progress, status, rounds } = props;
+    const { removeTimer } = useContext(AppContext);
     const [currentRound, setCurrentRound] = useState(1);
-    const active = activeIndex === index;
-
-    useInterval(() => {
-        if (paused || !active) return;
-
-        if (time === 0) {
-            if (currentRound === rounds) {
-                setActiveIndex(index + 1);
-            } else {
-                setCurrentRound(currentRound + 1);
-                setTime(workoutDuration);
-            }
-        } else {
-            setTime(c => c - 1);
-        }
-    }, 1000);
 
     let progressVal;
 
-    if (active) {
-        progressVal = translateFromSeconds(time);
-    } else if (activeIndex > index) {
-        progressVal = 'Complete';
+    if (status === 'Current') {
+        if (workoutDuration * currentRound === progress) {
+            setCurrentRound(currentRound + 1);
+        }
+        progressVal = translateFromSeconds(currentDuration - progress);
     } else {
-        progressVal = 'Coming Up';
+        progressVal = status;
     }
 
     return (
         <>
             <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration * rounds)} progress={progressVal} removeClick={() => removeTimer(index)} />
-            {active && <div style={{ fontStyle: "italic",}}>Round {currentRound} of {rounds}</div>}
+            {/* {active && <div style={{ fontStyle: "italic",}}>Round {currentRound} of {rounds}</div>} */}
         </>
     );
 

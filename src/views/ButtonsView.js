@@ -4,11 +4,11 @@ import { Button } from '../components/generic/Button';
 
 const ButtonsView = () => {
 
-    const { timers, paused, setPaused, reset } = useContext(AppContext);
+    const { timers, currentTime, paused, setPaused, reset, isComplete } = useContext(AppContext);
 
     const handleClick = value => {
 
-        if (value === 'Start' || value === 'Pause') {
+        if (value === 'Start' || value === 'Pause' || value === 'Resume') {
             setPaused(!paused);
         } else if (value === 'Reset') {
             reset();
@@ -21,8 +21,8 @@ const ButtonsView = () => {
 
     return (
         <div style={{ margin: "20px 0", display: "flex", justifyContent: "center",}}>
-            {makeButton({
-                value: paused ? 'Start' : 'Pause'
+            {!isComplete && makeButton({
+                value: paused && currentTime === 0 ? 'Start' : paused ? 'Resume' : 'Pause'
             })}
             {makeButton({
                 value: "Reset"

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { AppContext } from "../AppProvider";
-import { translateToSeconds } from '../utils/helpers';
 
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
@@ -31,7 +30,7 @@ const TimerTitle = styled.div`
 `;
 
 const TimersView = () => {
-  const { timers } = useContext(AppContext);
+  const { timers, currentTime, activeIndex } = useContext(AppContext);
 
   const InnerTimer = ({type, props}) => {
     if (type === 'Stopwatch') {
@@ -53,9 +52,11 @@ const TimersView = () => {
           <div style={{ width: "430px", padding: "15px 0 15px 25px",}}>
             <InnerTimer type={timer.timerType} props={{
               index: index,
-              workoutDuration: translateToSeconds(timer.inputHours, timer.inputMinutes, timer.inputSeconds),
-              restDuration: translateToSeconds(timer.input2Hours, timer.input2Minutes, timer.input2Seconds),
+              workoutDuration: timer.workoutDuration,
+              restDuration: timer.restDuration,
               rounds: timer.inputRounds,
+              progress: currentTime,
+              status: index === activeIndex ? 'Current' : index > activeIndex ? 'Upcoming' : 'Complete',
             }} />
           </div>
         </Timer>

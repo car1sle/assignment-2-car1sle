@@ -27,10 +27,11 @@ export const theme = {
 
 const StyledButton = styled.button`
   font-family: 'Roboto', sans-serif;
+  width: 90px;
   font-size: 17px;
   text-transform: uppercase;
   margin: 5px;
-  padding: 8px 14px;
+  padding: 8px 0;
   border-radius: 5px;
   font-weight: 700;
   border: 0;

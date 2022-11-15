@@ -1,34 +1,25 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from '../../AppProvider';
-import { useInterval } from '../../utils/hooks';
 import { translateFromSeconds } from '../../utils/helpers';
 import Counter from '../generic/Counter';
 
 const Countdown = ({ props }) => {
 
-    const { index, workoutDuration } = props;
-    const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
-    const [time, setTime] = useState(workoutDuration);
-    const active = activeIndex === index;
+    const { index, workoutDuration, progress, status } = props;
+    const { timers, removeTimer, setIsComplete } = useContext(AppContext);
 
-    useInterval(() => {
-        if (paused || !active) return;
-
-        if (time === 0) {
-            setActiveIndex(index + 1);
-        } else {
-            setTime(c => c - 1);
+    useEffect(() => {
+        if (index === timers.length && status === 'Complete') {
+          setIsComplete(true);
         }
-    }, 1000);
+    }, [status])
 
     let progressVal;
 
-    if (active) {
-        progressVal = translateFromSeconds(time);
-    } else if (activeIndex > index) {
-        progressVal = 'Complete';
+    if (status === 'Current') {
+        progressVal = translateFromSeconds(workoutDuration - progress);
     } else {
-        progressVal = 'Coming Up';
+        progressVal = status;
     }
 
     return (

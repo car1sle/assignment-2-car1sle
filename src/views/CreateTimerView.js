@@ -1,6 +1,14 @@
 import { useState, useContext } from 'react';
 import { AppContext } from '../AppProvider';
 import Input from '../components/generic/Input';
+import styled from 'styled-components';
+
+const StyledDropdown = styled.select`
+    font-size: 20px;
+    padding: 5px 10px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+`;
 
 const CreateTimerView = () => {
 
@@ -31,11 +39,11 @@ const CreateTimerView = () => {
 
     const Dropdown = ({timers, timerType}) => {
         return (
-            <div style={{ textAlign: "center",}}>
-                <select id="timers" onChange={e => {setTimerType(e.target.value);}}>
+            <div style={{ textAlign: "center", margin: "0 0 20px",}}>
+                <StyledDropdown id="timers" onChange={e => {setTimerType(e.target.value);}}>
                     <option value={timerType}>{timerType}</option>
                     {timers.map(timer => timerType !== timer.timerType && <option key={timer.timerType} value={timer.timerType}>{timer.timerType}</option>)}
-                </select>
+                </StyledDropdown>
             </div>
         )
     };
