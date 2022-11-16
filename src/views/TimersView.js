@@ -16,6 +16,7 @@ const Timers = styled.div`
 
 const Timer = styled.div`
   border: 2px solid #2e2e2e;
+  border-radius: 5px;
   margin: 8px;
   background: #ffffff;
 `;
@@ -52,8 +53,8 @@ const TimersView = () => {
           <div style={{ width: "430px", padding: "15px 0 15px 25px",}}>
             <InnerTimer type={timer.timerType} props={{
               index: index,
-              workoutDuration: timer.workoutDuration,
-              restDuration: timer.restDuration,
+              workoutRoundDuration: timer.workoutRoundDuration,
+              restRoundDuration: timer.restRoundDuration,
               rounds: timer.inputRounds,
               progress: currentTime,
               status: index === activeIndex ? 'Current' : index > activeIndex ? 'Upcoming' : 'Complete',

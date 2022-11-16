@@ -39,7 +39,7 @@ const CreateTimerView = () => {
 
     const Dropdown = ({timers, timerType}) => {
         return (
-            <div style={{ textAlign: "center", margin: "0 0 20px",}}>
+            <div style={{ textAlign: "center", margin: "30px 0 20px",}}>
                 <StyledDropdown id="timers" onChange={e => {setTimerType(e.target.value);}}>
                     <option value={timerType}>{timerType}</option>
                     {timers.map(timer => timerType !== timer.timerType && <option key={timer.timerType} value={timer.timerType}>{timer.timerType}</option>)}

@@ -24,7 +24,8 @@ const ButtonsView = () => {
             {!isComplete && makeButton({
                 value: paused && currentTime === 0 ? 'Start' : paused ? 'Resume' : 'Pause'
             })}
-            {makeButton({
+            {/* TODO: Can I make this mount more instantly? */}
+            {currentTime !== 0 && makeButton({
                 value: "Reset"
             })}
         </div>

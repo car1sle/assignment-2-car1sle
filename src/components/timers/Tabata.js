@@ -6,10 +6,10 @@ import Counter from '../generic/Counter';
 
 const Tabata = ({ props }) => {
 
-    const { index, workoutDuration, restDuration, rounds } = props;
+    const { index, workoutRoundDuration, restRoundDuration, rounds } = props;
     const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
-    const [time, setTime] = useState(workoutDuration);
-    const [time2, setTime2] = useState(restDuration);
+    const [time, setTime] = useState(workoutRoundDuration);
+    const [time2, setTime2] = useState(restRoundDuration);
     const [currentRound, setCurrentRound] = useState(1);
     const active = activeIndex === index;
 
@@ -24,8 +24,8 @@ const Tabata = ({ props }) => {
                     setActiveIndex(index + 1);
                 } else {
                     setCurrentRound(currentRound + 1);
-                    setTime(workoutDuration);
-                    setTime2(restDuration);
+                    setTime(workoutRoundDuration);
+                    setTime2(restRoundDuration);
                 }
             } else {
                 i2 = setInterval(() => {
@@ -44,8 +44,8 @@ const Tabata = ({ props }) => {
 
     return (
         <>
-            <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration * rounds)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
-            <Counter label="Rest duration" duration={translateFromSeconds(restDuration * rounds)} progress={active && translateFromSeconds(time2)} removeClick={() => removeTimer(index)} />
+            <Counter label="Workout duration" duration={translateFromSeconds(workoutRoundDuration * rounds)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
+            <Counter label="Rest duration" duration={translateFromSeconds(restRoundDuration * rounds)} progress={active && translateFromSeconds(time2)} removeClick={() => removeTimer(index)} />
             {active && <div>Round {currentRound} of {rounds}</div>}
         </>
     );

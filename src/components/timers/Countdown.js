@@ -5,11 +5,11 @@ import Counter from '../generic/Counter';
 
 const Countdown = ({ props }) => {
 
-    const { index, workoutDuration, progress, status } = props;
+    const { index, workoutRoundDuration, progress, status } = props;
     const { timers, removeTimer, setIsComplete } = useContext(AppContext);
 
     useEffect(() => {
-        if (index === timers.length && status === 'Complete') {
+        if (index + 1 === timers.length && status === 'Complete') {
           setIsComplete(true);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -18,13 +18,13 @@ const Countdown = ({ props }) => {
     let progressVal;
 
     if (status === 'Current') {
-        progressVal = translateFromSeconds(workoutDuration - progress);
+        progressVal = translateFromSeconds(workoutRoundDuration - progress);
     } else {
         progressVal = status;
     }
 
     return (
-        <Counter label="Workout duration" duration={translateFromSeconds(workoutDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+        <Counter label="Workout duration" duration={translateFromSeconds(workoutRoundDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
     );
 
 };

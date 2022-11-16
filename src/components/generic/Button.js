@@ -26,7 +26,7 @@ export const theme = {
 };
 
 const StyledButton = styled.button`
-  width: 90px;
+  width: 100px;
   font-size: 17px;
   text-transform: uppercase;
   margin: 5px;

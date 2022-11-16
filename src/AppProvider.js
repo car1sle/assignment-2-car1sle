@@ -16,7 +16,7 @@ export const AppProvider = ({ children }) => {
     useInterval(() => {
       if (paused || activeIndex >= timers.length) return;
 
-      if (currentTime === timers[activeIndex].workoutDuration * timers[activeIndex].inputRounds) {
+      if (currentTime === timers[activeIndex].totalDuration) {
           setActiveIndex(activeIndex + 1);
           setCurrentTime(0);
       } else {
@@ -29,6 +29,9 @@ export const AppProvider = ({ children }) => {
       setCurrentTime(0);
       setPaused(true);
       setIsComplete(false);
+    };
+
+    const fastForward = () => {
     };
 
     return (
@@ -44,15 +47,18 @@ export const AppProvider = ({ children }) => {
           isComplete,
           setIsComplete,
           reset: reset,
+          fastForward: fastForward,
           createTimer: ({ timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds = 1 }) => {
             const id = uuid();
             setTimers([...timers, { 
               id, 
               timerType, 
               inputRounds, 
-              workoutDuration: translateToSeconds(inputHours, inputMinutes, inputSeconds), 
-              restDuration: translateToSeconds(input2Hours, input2Minutes, input2Seconds), 
-              totalDuration: (translateToSeconds(inputHours, inputMinutes, inputSeconds) * inputRounds),
+              workoutRoundDuration: translateToSeconds(inputHours, inputMinutes, inputSeconds), 
+              restRoundDuration: translateToSeconds(input2Hours, input2Minutes, input2Seconds), 
+              totalWorkoutDuration: (translateToSeconds(inputHours, inputMinutes, inputSeconds) * inputRounds),
+              totalRestDuration: (translateToSeconds(input2Hours, input2Minutes, input2Seconds) * inputRounds),
+              totalDuration: ((translateToSeconds(inputHours, inputMinutes, inputSeconds) * inputRounds) + (translateToSeconds(input2Hours, input2Minutes, input2Seconds) * inputRounds)),
             }]);
           },
           removeTimer: index => setTimers(timers.filter((t, i) => i !== index)),

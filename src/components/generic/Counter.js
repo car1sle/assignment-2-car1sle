@@ -9,7 +9,6 @@ const StyledCounter = styled.div`
   font-size: 30px;
   letter-spacing: -0.75px;
   display: inline-block;
-  padding: 0 0 20px;
 `;
 
 const Counter = ({ label, duration, progress, removeClick }) => {
