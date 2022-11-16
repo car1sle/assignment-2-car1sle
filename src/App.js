@@ -6,7 +6,7 @@ import ButtonsView from "./views/ButtonsView";
 import { AppProvider } from "./AppProvider";
 
 const Container = styled.div`
-  background: #dbdbdb;
+  background: #ffffff;
   height: 100vh;
   overflow: auto;
 `;

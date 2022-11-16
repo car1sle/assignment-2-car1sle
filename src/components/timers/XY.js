@@ -5,8 +5,8 @@ import Counter from '../generic/Counter';
 
 const XY = ({ props }) => {
 
-    const { index, workoutRoundDuration, progress, status, rounds } = props;
-    const { timers, removeTimer, setIsComplete } = useContext(AppContext);
+    const { index, workoutRoundDuration, progress, status, rounds, totalDuration } = props;
+    const { timers, removeTimer, setIsComplete, currentRound } = useContext(AppContext);
 
     useEffect(() => {
         if (index + 1 === timers.length && status === 'Complete') {
@@ -24,7 +24,11 @@ const XY = ({ props }) => {
     }
 
     return (
-        <Counter label="Workout duration" duration={translateFromSeconds(workoutRoundDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+        <>
+            <Counter duration={translateFromSeconds(totalDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+            <div style={{ textAlign: "center", padding: "15px 0 0",}}>Round: <b>{currentRound}</b> of {rounds}</div>
+        </>
+
     );
 
 };

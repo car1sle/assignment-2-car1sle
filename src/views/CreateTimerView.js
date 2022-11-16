@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../AppProvider';
 import Input from '../components/generic/Input';
 import styled from 'styled-components';
@@ -23,6 +23,12 @@ const CreateTimerView = () => {
     const [input2Minutes, setInput2Minutes] = useState(0);
     const [input2Seconds, setInput2Seconds] = useState(0);
     const [inputRounds, setInputRounds] = useState(1);
+
+    useEffect(() => {
+        if (timerType === "Stopwatch" || timerType === "Countdown") {
+            setInputRounds(1);
+        }
+    },[timerType]);
 
     const timers = [
         { timerType: "Stopwatch" },

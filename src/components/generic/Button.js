@@ -26,11 +26,11 @@ export const theme = {
 };
 
 const StyledButton = styled.button`
-  width: 100px;
   font-size: 17px;
   text-transform: uppercase;
   margin: 5px;
-  padding: 8px 0;
+  width: 90%;
+  height: 65px;
   border-radius: 5px;
   font-weight: 700;
   border: 0;

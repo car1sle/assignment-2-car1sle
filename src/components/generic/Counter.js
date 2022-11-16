@@ -11,7 +11,7 @@ const StyledCounter = styled.div`
   display: inline-block;
 `;
 
-const Counter = ({ label, duration, progress, removeClick }) => {
+const Counter = ({ duration, progress, removeClick }) => {
 
   const { paused, reset } = useContext(AppContext);
 
@@ -23,8 +23,8 @@ const Counter = ({ label, duration, progress, removeClick }) => {
             reset();
           }
         }} />
-        <div>{label}:<br></br><StyledCounter>{duration}</StyledCounter></div>
-        {progress && <div>Progress:<br></br><StyledCounter>{progress}</StyledCounter></div>}
+        <div>Total timer duration:<br></br><StyledCounter>{duration}</StyledCounter></div>
+        {progress && <div>Your progress:<br></br><StyledCounter>{progress}</StyledCounter></div>}
       </div>
   );
 };

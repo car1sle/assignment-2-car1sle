@@ -11,17 +11,26 @@ export const AppProvider = ({ children }) => {
     const [paused, setPaused] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
-    const [isComplete, setIsComplete] = useState(0);
+    const [isComplete, setIsComplete] = useState(false);
+    const [currentRound, setCurrentRound] = useState(1);
 
     useInterval(() => {
       if (paused || activeIndex >= timers.length) return;
 
-      if (currentTime === timers[activeIndex].totalDuration) {
-          setActiveIndex(activeIndex + 1);
-          setCurrentTime(0);
+      if (currentTime === timers[activeIndex].workoutRoundDuration) {
+        setCurrentTime(0);
+        setCurrentRound((r) => {
+          let newRound = r + 1;
+          if (newRound > timers[activeIndex].inputRounds) {
+            newRound = 1;
+            setActiveIndex(activeIndex => activeIndex + 1);
+          }
+          return newRound;
+        });
       } else {
-          setCurrentTime(c => c + 1);
+        setCurrentTime(c => c + 1);
       }
+
     }, 1000);
 
     const reset = () => {
@@ -29,9 +38,14 @@ export const AppProvider = ({ children }) => {
       setCurrentTime(0);
       setPaused(true);
       setIsComplete(false);
+      setCurrentRound(1);
     };
 
     const fastForward = () => {
+      setActiveIndex(activeIndex + 1);
+      setCurrentTime(0);
+      setCurrentRound(timers[activeIndex].inputRounds);
+      setIsComplete(true);
     };
 
     return (
@@ -39,6 +53,7 @@ export const AppProvider = ({ children }) => {
         value={{
           timers,
           currentTime,
+          currentRound,
           setCurrentTime,
           activeIndex,
           setActiveIndex,

@@ -24,7 +24,7 @@ const Countdown = ({ props }) => {
     }
 
     return (
-        <Counter label="Workout duration" duration={translateFromSeconds(workoutRoundDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+        <Counter duration={translateFromSeconds(workoutRoundDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
     );
 
 };
