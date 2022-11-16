@@ -25,8 +25,8 @@ const XY = ({ props }) => {
 
     return (
         <>
-            <Counter duration={translateFromSeconds(totalDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
-            <div style={{ textAlign: "center", padding: "15px 0 0",}}>Round: <b>{currentRound}</b> of {rounds}</div>
+            <Counter label="Total workout time" duration={translateFromSeconds(totalDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+            <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRound}</b> of {rounds}</div>
         </>
 
     );

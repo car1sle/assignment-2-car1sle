@@ -11,19 +11,19 @@ const StyledCounter = styled.div`
   display: inline-block;
 `;
 
-const Counter = ({ duration, progress, removeClick }) => {
+const Counter = ({ label, duration, progress, removeClick }) => {
 
   const { paused, reset } = useContext(AppContext);
 
   return (
-      <div style={{ display: "flex", alignItems: "center", gap: "35px",}}>
-        <img alt="Delete" src={trash} style={{ width: "17px", height: "20px", cursor: paused ? "pointer" : "not-allowed", opacity: paused ? 1 : 0.5,}} onClick={() => {
+      <div style={{ display: "flex", alignItems: "center", gap: "35px", padding: "0 0 20px",}}>
+        {removeClick ? <img alt="Delete" src={trash} style={{ width: "17px", height: "20px", cursor: paused ? "pointer" : "not-allowed", opacity: paused ? 1 : 0.5,}} onClick={() => {
           if (paused) {
             removeClick();
             reset();
           }
-        }} />
-        <div>Total timer duration:<br></br><StyledCounter>{duration}</StyledCounter></div>
+        }} /> : <div style={{ width: "17px",}}></div>}
+        <div>{label}:<br></br><StyledCounter>{duration}</StyledCounter></div>
         {progress && <div>Your progress:<br></br><StyledCounter>{progress}</StyledCounter></div>}
       </div>
   );

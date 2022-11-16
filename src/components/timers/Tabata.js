@@ -1,55 +1,43 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from '../../AppProvider';
-import { useInterval } from '../../utils/hooks';
 import { translateFromSeconds } from '../../utils/helpers';
 import Counter from '../generic/Counter';
 
-const Tabata = ({ props }) => {
+const XY = ({ props }) => {
 
-    const { index, workoutRoundDuration, restRoundDuration, rounds } = props;
-    const { activeIndex, paused, setActiveIndex, removeTimer } = useContext(AppContext);
-    const [time, setTime] = useState(workoutRoundDuration);
-    const [time2, setTime2] = useState(restRoundDuration);
-    const [currentRound, setCurrentRound] = useState(1);
-    const active = activeIndex === index;
+    const { index, workoutRoundDuration, restRoundDuration, progress, status, rounds, totalWorkoutDuration, totalRestDuration } = props;
+    const { timers, removeTimer, setIsComplete, currentRound } = useContext(AppContext);
 
-    useInterval(() => {
-        if (paused || !active) return;
-
-        let i2;
-
-        if (time === 0) {
-            if (time2 === 0) {
-                if (currentRound === rounds) {
-                    setActiveIndex(index + 1);
-                } else {
-                    setCurrentRound(currentRound + 1);
-                    setTime(workoutRoundDuration);
-                    setTime2(restRoundDuration);
-                }
-            } else {
-                i2 = setInterval(() => {
-                    setTime2(time2 - 1);
-                }, 1000);
-            }
-        } else {
-            setTime(c => c - 1);
+    useEffect(() => {
+        if (index + 1 === timers.length && status === 'Complete') {
+          setIsComplete(true);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status])
 
-        return () => {
-            clearInterval(i2);
-        };
-        
-    }, 1000);
+    let progressVal;
+    if (status === 'Current') {
+        progressVal = translateFromSeconds(workoutRoundDuration - progress);
+    } else {
+        progressVal = status;
+    }
+
+    let progressVal2;
+    if (status === 'Current') {
+        progressVal2 = translateFromSeconds(restRoundDuration - progress);
+    } else {
+        progressVal2 = status;
+    }
 
     return (
         <>
-            <Counter label="Workout duration" duration={translateFromSeconds(workoutRoundDuration * rounds)} progress={active && translateFromSeconds(time)} removeClick={() => removeTimer(index)} />
-            <Counter label="Rest duration" duration={translateFromSeconds(restRoundDuration * rounds)} progress={active && translateFromSeconds(time2)} removeClick={() => removeTimer(index)} />
-            {active && <div>Round {currentRound} of {rounds}</div>}
+            <Counter label="Total workout time" duration={translateFromSeconds(totalWorkoutDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+            <Counter label="Total rest time" duration={translateFromSeconds(totalRestDuration)} progress={progressVal2} />
+            <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRound}</b> of {rounds}</div>
         </>
+
     );
 
 };
 
-export default Tabata;
+export default XY;
