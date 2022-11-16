@@ -4,10 +4,10 @@ import Input from '../components/generic/Input';
 import styled from 'styled-components';
 
 const StyledDropdown = styled.select`
-    font-size: 20px;
-    padding: 5px 10px;
-    letter-spacing: 0.5px;
-    font-weight: bold;
+    font-size: 18px;
+    padding: 5px;
+    width: 160px;
+    font-weight: 500;
 `;
 
 const CreateTimerView = () => {

@@ -26,7 +26,6 @@ export const theme = {
 };
 
 const StyledButton = styled.button`
-  font-family: 'Roboto', sans-serif;
   width: 90px;
   font-size: 17px;
   text-transform: uppercase;

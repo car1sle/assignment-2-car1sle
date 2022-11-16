@@ -12,6 +12,7 @@ const Countdown = ({ props }) => {
         if (index === timers.length && status === 'Complete') {
           setIsComplete(true);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status])
 
     let progressVal;
