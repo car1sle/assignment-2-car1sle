@@ -16,24 +16,28 @@ const XY = ({ props }) => {
     }, [status])
 
     let progressVal;
+    let progressVal2;
+    let currentRoundVal;
+
     if (status === 'Current') {
-        progressVal = translateFromSeconds(workoutRoundDuration - progress);
+        progressVal = (workoutRoundDuration - progress) > 0 ? translateFromSeconds(workoutRoundDuration - progress) : translateFromSeconds(0);
+        progressVal2 = (workoutRoundDuration - progress) > 0 ? translateFromSeconds(restRoundDuration) : translateFromSeconds(restRoundDuration - (progress - workoutRoundDuration));
+        currentRoundVal = currentRound;
     } else {
         progressVal = status;
-    }
-
-    let progressVal2;
-    if (status === 'Current') {
-        progressVal2 = translateFromSeconds(restRoundDuration - progress);
-    } else {
         progressVal2 = status;
+        if (status === 'Complete') {
+            currentRoundVal = rounds;
+        } else {
+            currentRoundVal = 1;
+        }
     }
 
     return (
         <>
             <Counter label="Total workout time" duration={translateFromSeconds(totalWorkoutDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
             <Counter label="Total rest time" duration={translateFromSeconds(totalRestDuration)} progress={progressVal2} />
-            <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRound}</b> of {rounds}</div>
+            <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRoundVal}</b> of {rounds}</div>
         </>
 
     );

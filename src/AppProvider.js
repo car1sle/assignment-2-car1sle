@@ -17,9 +17,9 @@ export const AppProvider = ({ children }) => {
     useInterval(() => {
       if (paused || activeIndex >= timers.length) return;
 
-      if (currentTime === timers[activeIndex].workoutRoundDuration) {
+      if (currentTime === timers[activeIndex].roundDuration) {
         setCurrentTime(0);
-        setCurrentRound((r) => {
+        setCurrentRound(r => {
           let newRound = r + 1;
           if (newRound > timers[activeIndex].inputRounds) {
             newRound = 1;
@@ -71,6 +71,7 @@ export const AppProvider = ({ children }) => {
               inputRounds, 
               workoutRoundDuration: translateToSeconds(inputHours, inputMinutes, inputSeconds), 
               restRoundDuration: translateToSeconds(input2Hours, input2Minutes, input2Seconds), 
+              roundDuration: translateToSeconds(inputHours, inputMinutes, inputSeconds) + translateToSeconds(input2Hours, input2Minutes, input2Seconds),
               totalWorkoutDuration: (translateToSeconds(inputHours, inputMinutes, inputSeconds) * inputRounds),
               totalRestDuration: (translateToSeconds(input2Hours, input2Minutes, input2Seconds) * inputRounds),
               totalDuration: ((translateToSeconds(inputHours, inputMinutes, inputSeconds) * inputRounds) + (translateToSeconds(input2Hours, input2Minutes, input2Seconds) * inputRounds)),

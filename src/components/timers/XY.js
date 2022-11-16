@@ -16,17 +16,24 @@ const XY = ({ props }) => {
     }, [status])
 
     let progressVal;
+    let currentRoundVal;
 
     if (status === 'Current') {
         progressVal = translateFromSeconds(workoutRoundDuration - progress);
+        currentRoundVal = currentRound;
     } else {
         progressVal = status;
+        if (status === 'Complete') {
+            currentRoundVal = rounds;
+        } else {
+            currentRoundVal = 1;
+        }
     }
 
     return (
         <>
             <Counter label="Total workout time" duration={translateFromSeconds(totalDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
-            <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRound}</b> of {rounds}</div>
+            <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRoundVal}</b> of {rounds}</div>
         </>
 
     );

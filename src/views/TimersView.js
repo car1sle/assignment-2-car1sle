@@ -55,6 +55,7 @@ const TimersView = () => {
               index: index,
               workoutRoundDuration: timer.workoutRoundDuration,
               restRoundDuration: timer.restRoundDuration,
+              roundDuration: timer.roundDuration,
               totalWorkoutDuration: timer.totalWorkoutDuration,
               totalRestDuration: timer.totalRestDuration,
               totalDuration: timer.totalWorkoutDuration,

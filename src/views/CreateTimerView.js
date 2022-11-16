@@ -25,10 +25,10 @@ const CreateTimerView = () => {
     const [inputRounds, setInputRounds] = useState(1);
 
     useEffect(() => {
-        if (timerType === "Stopwatch" || timerType === "Countdown") {
+        if (timerType === "Stopwatch" || timerType === "Countdown" || timerType === "Tabata") {
             setInputRounds(1);
         }
-    },[timerType]);
+    }, [timerType]);
 
     const timers = [
         { timerType: "Stopwatch" },
