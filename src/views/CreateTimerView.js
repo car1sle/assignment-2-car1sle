@@ -23,12 +23,21 @@ const CreateTimerView = () => {
     const [input2Minutes, setInput2Minutes] = useState(0);
     const [input2Seconds, setInput2Seconds] = useState(0);
     const [inputRounds, setInputRounds] = useState(1);
+    const [confirmationMessage, setConfirmationMessage] = useState('');
 
     useEffect(() => {
         if (timerType === "Stopwatch" || timerType === "Countdown" || timerType === "Tabata") {
             setInputRounds(1);
         }
     }, [timerType]);
+
+    useEffect(() => {
+        if (confirmationMessage) {
+            setTimeout(() => {
+                setConfirmationMessage('');
+            }, "2000")
+        }
+    }, [confirmationMessage]);
 
     const timers = [
         { timerType: "Stopwatch" },
@@ -54,7 +63,14 @@ const CreateTimerView = () => {
         )
     };
 
-    if (timerType === defaultTimer) {return <Dropdown timers={timers} timerType={timerType} />}
+    if (timerType === defaultTimer) {
+        return (
+            <>
+                <Dropdown timers={timers} timerType={timerType} />
+                {confirmationMessage && <div style={{ textAlign: "center", fontStyle: "italic", color: "green",}}>{confirmationMessage}</div>}
+            </>
+        )
+    }
 
     return (
         <>
@@ -117,6 +133,7 @@ const CreateTimerView = () => {
                     setInput2Minutes(0);
                     setInput2Seconds(0);
                     setInputRounds(1);
+                    setConfirmationMessage(`${timerType} added to queue`);
                     }}
                 >Add To Queue</button>
             </div>

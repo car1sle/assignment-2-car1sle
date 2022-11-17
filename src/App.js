@@ -18,7 +18,7 @@ const TimersPage = () => {
       <AppProvider>
         <ButtonsView />
         <TimersView />
-        <div style={{ margin: "0 auto", textAlign: "center",}}>
+        <div style={{ margin: "0 auto 50px", textAlign: "center",}}>
           <Link to="/assignment-2-car1sle/add">
             <button style={{ margin: "0 auto", textAlign: "center",}}>Add a timer</button>
           </Link>
@@ -38,7 +38,7 @@ const CreateTimerPage = () => {
       <AppProvider>
         <div style={{ margin: "0 auto", textAlign: "center",}}>
           <Link to="/assignment-2-car1sle/">
-            <div style={{ margin: "15px auto", textAlign: "center", textDecoration: "underline"}}><Arrow /> Go back to workout</div>
+            <div style={{ margin: "15px auto", textAlign: "center", textDecoration: "underline", color: "#305bbf",}}><Arrow /> Go back to workout</div>
           </Link>
         </div>
         <CreateTimerView />
