@@ -6,13 +6,13 @@ import styled from 'styled-components';
 const StyledDropdown = styled.select`
     font-size: 18px;
     padding: 5px;
-    width: 160px;
+    width: 200px;
     font-weight: 500;
 `;
 
 const CreateTimerView = () => {
 
-    const defaultTimer = 'Create a Timer';
+    const defaultTimer = 'Choose Your Timer';
 
     const { createTimer } = useContext(AppContext);
     const [timerType, setTimerType] = useState(defaultTimer);

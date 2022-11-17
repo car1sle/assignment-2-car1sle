@@ -46,7 +46,7 @@ export const AppProvider = ({ children }) => {
       setActiveIndex(activeIndex + 1);
       setCurrentTime(0);
       setCurrentRound(timers[activeIndex].inputRounds);
-      setIsComplete(true);
+      setOnlyEnableStart(false);
     };
 
     return (

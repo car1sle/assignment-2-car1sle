@@ -36,12 +36,12 @@ const CreateTimerPage = () => {
   return (
     <Container>
       <AppProvider>
-        <CreateTimerView />
         <div style={{ margin: "0 auto", textAlign: "center",}}>
           <Link to="/assignment-2-car1sle/">
             <div style={{ margin: "15px auto", textAlign: "center", textDecoration: "underline"}}><Arrow /> Go back to workout</div>
           </Link>
         </div>
+        <CreateTimerView />
       </AppProvider>
     </Container>
   );
