@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../AppProvider';
 import Input from '../components/generic/Input';
 import styled from 'styled-components';
+// eslint-disable-next-line no-unused-vars
 import { useNavigate } from "react-router-dom";
 
 const StyledDropdown = styled.select`
@@ -13,6 +14,7 @@ const StyledDropdown = styled.select`
 
 const CreateTimerView = () => {
 
+    // eslint-disable-next-line no-unused-vars
     const navigate = useNavigate();
     const defaultTimer = 'Create a Timer';
 
@@ -119,6 +121,7 @@ const CreateTimerView = () => {
                     setInput2Minutes(0);
                     setInput2Seconds(0);
                     setInputRounds(1);
+                    // eslint-disable-next-line no-unused-vars
                     // navigate('/');
                     }}
                 >Add To Queue</button>
