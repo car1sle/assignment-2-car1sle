@@ -19,7 +19,7 @@ const TimersPage = () => {
         <ButtonsView />
         <TimersView />
         <div style={{ margin: "0 auto", textAlign: "center",}}>
-          <Link to="/add">
+          <Link to="/assignment-2-car1sle/add">
             <button style={{ margin: "0 auto", textAlign: "center",}}>Add a timer</button>
           </Link>
         </div>
@@ -28,11 +28,20 @@ const TimersPage = () => {
   );
 };
 
+const Arrow = () => {
+  return <>&#8678;</>
+};
+
 const CreateTimerPage = () => {
   return (
     <Container>
       <AppProvider>
         <CreateTimerView />
+        <div style={{ margin: "0 auto", textAlign: "center",}}>
+          <Link to="/assignment-2-car1sle/">
+            <div style={{ margin: "15px auto", textAlign: "center", textDecoration: "underline"}}><Arrow /> Go back to workout</div>
+          </Link>
+        </div>
       </AppProvider>
     </Container>
   );
@@ -42,8 +51,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<TimersPage />} />
-        <Route path="/add" element={<CreateTimerPage />} />
+        <Route path="/assignment-2-car1sle" element={<TimersPage />} />
+        <Route path="/assignment-2-car1sle/add" element={<CreateTimerPage />} />
       </Routes>
     </BrowserRouter>
   );
