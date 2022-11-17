@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useInterval = (callback, delay) => {
     const savedCallback = useRef(callback);
@@ -20,4 +20,38 @@ export const useInterval = (callback, delay) => {
   
       return () => clearInterval(id);
     }, [delay]);
+};
+
+export const usePersistedState = (storageKey, fallbackValue) => {
+  const [value, setValue] = useState(() => {
+    const storedValue = window.localStorage.getItem(storageKey);
+
+    if (storedValue === null || !storedValue) {
+      console.log('returning fallback', fallbackValue)
+      return fallbackValue;
+    }
+
+    try {
+      return JSON.parse(storedValue);
+    } catch (e) {
+      console.log('Error parsing stored value', e);
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    if (value) {
+      window.localStorage.setItem(storageKey, JSON.stringify(value));
+    } else {
+      window.localStorage.removeItem(storageKey);
+    }
+  }, [value, storageKey]);
+
+  return [
+    value,
+    setValue,
+    () => {
+      setValue(fallbackValue);
+    },
+  ];
 };

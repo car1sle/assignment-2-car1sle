@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { useInterval } from "./utils/hooks";
+import { useInterval, usePersistedState } from "./utils/hooks";
 import { translateToSeconds } from "./utils/helpers";
 
 export const AppContext = React.createContext({});
 
 export const AppProvider = ({ children }) => {
 
-    const [timers, setTimers] = useState([]);
+    const [timers, setTimers] = usePersistedState('timers', []);
     const [paused, setPaused] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);

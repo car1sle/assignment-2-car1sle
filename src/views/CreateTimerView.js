@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../AppProvider';
 import Input from '../components/generic/Input';
 import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
 
 const StyledDropdown = styled.select`
     font-size: 18px;
@@ -12,6 +13,7 @@ const StyledDropdown = styled.select`
 
 const CreateTimerView = () => {
 
+    const navigate = useNavigate();
     const defaultTimer = 'Create a Timer';
 
     const { createTimer } = useContext(AppContext);
@@ -117,6 +119,7 @@ const CreateTimerView = () => {
                     setInput2Minutes(0);
                     setInput2Seconds(0);
                     setInputRounds(1);
+                    // navigate('/');
                     }}
                 >Add To Queue</button>
             </div>
