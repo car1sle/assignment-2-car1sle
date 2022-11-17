@@ -8,6 +8,7 @@ const XY = ({ props }) => {
     const { index, workoutRoundDuration, restRoundDuration, progress, status, rounds, totalWorkoutDuration, totalRestDuration } = props;
     const { timers, removeTimer, setIsComplete, currentRound } = useContext(AppContext);
 
+    // I tried moving this to hooks.js to dry it up, but gave an error
     useEffect(() => {
         if (index + 1 === timers.length && status === 'Complete') {
           setIsComplete(true);
@@ -35,8 +36,8 @@ const XY = ({ props }) => {
 
     return (
         <>
-            <Counter label="Total workout time" duration={translateFromSeconds(totalWorkoutDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
-            <Counter label="Total rest time" duration={translateFromSeconds(totalRestDuration)} progress={progressVal2} />
+            <Counter label="Workout time" duration={translateFromSeconds(totalWorkoutDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+            <Counter label="Rest time" duration={translateFromSeconds(totalRestDuration)} progress={progressVal2} />
             <div style={{ textAlign: "center", padding: "5px 0 0",}}>Round: <b>{currentRoundVal}</b> of {rounds}</div>
         </>
 

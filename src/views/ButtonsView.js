@@ -4,11 +4,12 @@ import { Button } from '../components/generic/Button';
 
 const ButtonsView = () => {
 
-    const { timers, currentTime, paused, setPaused, reset, fastForward, isComplete } = useContext(AppContext);
+    const { timers, currentTime, paused, setPaused, reset, fastForward, isComplete, onlyEnableStart, setOnlyEnableStart } = useContext(AppContext);
 
     const handleClick = value => {
 
         if (value === 'Start' || value === 'Pause' || value === 'Resume') {
+            if (value === 'Start') {setOnlyEnableStart(false);}
             setPaused(!paused);
         } else if (value === 'Fast Forward') {
             fastForward();
@@ -35,13 +36,13 @@ const ButtonsView = () => {
                 <div style={{ flexBasis: "33%",}}>
                     {makeButton({
                         value: "Fast Forward",
-                        disabledValue: isComplete,
+                        disabledValue: onlyEnableStart ? true : isComplete,
                     })}
                 </div>
                 <div style={{ flexBasis: "33%",}}>
                     {makeButton({
                         value: "Reset", 
-                        disabledValue: !isComplete && !paused,
+                        disabledValue: onlyEnableStart ? true : (!isComplete && !paused),
                     })}
                 </div>
             </div>

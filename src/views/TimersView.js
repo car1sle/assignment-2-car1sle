@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { AppContext } from "../AppProvider";
+import { translateFromSeconds } from "../utils/helpers";
 
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
@@ -45,8 +46,11 @@ const TimersView = () => {
     };
   };
 
+  const totalQueueDuration = translateFromSeconds(timers.reduce((total, obj) => obj.totalDuration + total,0));
+
   return (
     <Timers>
+      <div style={{ fontSize: "18px",padding: "0 0 10px",}}>Total workout time: <b>{totalQueueDuration}</b></div>
       {timers && timers.map((timer, index) => (
         <Timer key={timer.id}>
           <TimerTitle>{timer.timerType}</TimerTitle>

@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
     const [currentTime, setCurrentTime] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
     const [currentRound, setCurrentRound] = useState(1);
+    const [onlyEnableStart, setOnlyEnableStart] = useState(true);
 
     useInterval(() => {
       if (paused || activeIndex >= timers.length) return;
@@ -61,6 +62,8 @@ export const AppProvider = ({ children }) => {
           setPaused,
           isComplete,
           setIsComplete,
+          onlyEnableStart,
+          setOnlyEnableStart,
           reset: reset,
           fastForward: fastForward,
           createTimer: ({ timerType, inputHours, inputMinutes, inputSeconds, input2Hours, input2Minutes, input2Seconds, inputRounds = 1 }) => {
@@ -76,6 +79,7 @@ export const AppProvider = ({ children }) => {
               totalRestDuration: (translateToSeconds(input2Hours, input2Minutes, input2Seconds) * inputRounds),
               totalDuration: ((translateToSeconds(inputHours, inputMinutes, inputSeconds) * inputRounds) + (translateToSeconds(input2Hours, input2Minutes, input2Seconds) * inputRounds)),
             }]);
+            setOnlyEnableStart(true);
           },
           removeTimer: index => setTimers(timers.filter((t, i) => i !== index)),
         }}

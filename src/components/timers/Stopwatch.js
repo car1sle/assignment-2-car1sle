@@ -8,6 +8,7 @@ const Stopwatch = ({ props }) => {
     const { index, workoutRoundDuration, progress, status } = props;
     const { timers, removeTimer, setIsComplete } = useContext(AppContext);
 
+    // I tried moving this to hooks.js to dry it up, but gave an error
     useEffect(() => {
         if (index + 1 === timers.length && status === 'Complete') {
           setIsComplete(true);
@@ -24,7 +25,7 @@ const Stopwatch = ({ props }) => {
     }
 
     return (
-        <Counter label="Total workout time" duration={translateFromSeconds(workoutRoundDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
+        <Counter label="Workout time" duration={translateFromSeconds(workoutRoundDuration)} progress={progressVal} removeClick={() => removeTimer(index)} />
     );
 
 };
